@@ -1,0 +1,7 @@
+uniform mat4 uModelViewMatrix, uProjectionMatrix;
+
+attribute vec3 aPosition;
+
+void main() {
+  gl_Position = uProjectionMatrix * uModelViewMatrix * vec4(aPosition, 1.0); 
+}

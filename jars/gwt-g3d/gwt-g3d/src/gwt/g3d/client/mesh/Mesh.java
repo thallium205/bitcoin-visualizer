@@ -1,0 +1,41 @@
+/*
+ * Copyright 2009 Hao Nguyen
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
+package gwt.g3d.client.mesh;
+
+import gwt.g3d.client.gl2.GL2;
+import gwt.g3d.client.gl2.GLDisposable;
+
+/**
+ * Interface for a mesh that can be rendered using WebGL.
+ * 
+ * @author hao1300@gmail.com
+ */
+public interface Mesh extends GLDisposable {
+
+	/**
+	 * Renders the mesh.
+	 */
+	void draw();
+	
+	/**
+	 * Initializes this mesh.
+	 * This method must be called before accessing any method in a mesh. 
+	 * If a mesh is disposed, it can be used again when init is called.
+	 * 
+	 * @param gl
+	 */
+	void init(GL2 gl);
+}

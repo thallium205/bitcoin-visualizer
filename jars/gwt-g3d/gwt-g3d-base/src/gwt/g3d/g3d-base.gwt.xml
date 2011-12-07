@@ -1,0 +1,9 @@
+<module>
+	<inherits name='com.google.gwt.core.Core'/>
+	<inherits name='com.google.gwt.user.UserAgent'/>
+	<inherits name='javax.Vecmath'/>
+	<inherits name='gwt.g2d.g2d'/>
+	<inherits name='gwt.g3d.resources.g3d-resources'/>
+	
+	<source path='client'/>
+</module>

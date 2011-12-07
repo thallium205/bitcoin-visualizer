@@ -1,37 +1,28 @@
 package com.bitcoinvisualizer.client.view;
 
+import gwt.g3d.client.Surface3D;
+import gwt.g3d.client.gl2.GL2;
+import gwt.g3d.client.gl2.enums.ClearBufferMask;
+import gwt.g3d.client.gl2.enums.DepthFunction;
+import gwt.g3d.client.gl2.enums.EnableCap;
+import gwt.g3d.client.math.MatrixStack;
+import gwt.g3d.client.mesh.StaticMesh;
+import gwt.g3d.client.primitive.PrimitiveFactory;
+import gwt.g3d.client.shader.LambertianShader;
+import gwt.g3d.client.shader.ShaderException;
+
 import com.bitcoinvisualizer.client.presenter.HomePresenter;
 import com.gwtplatform.mvp.client.ViewImpl;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
-
-/*
-import com.googlecode.gwtgl.array.Float32Array;
-import com.googlecode.gwtgl.binding.WebGLBuffer;
-import com.googlecode.gwtgl.binding.WebGLCanvas;
-import com.googlecode.gwtgl.binding.WebGLProgram;
-import com.googlecode.gwtgl.binding.WebGLRenderingContext;
-import com.googlecode.gwtgl.binding.WebGLShader;
-import com.googlecode.gwtgl.binding.WebGLUniformLocation;
-
-*/
 
 public class HomeView extends ViewImpl implements HomePresenter.MyView
 {
 
 	private final Widget widget;
-
-	// WebGL stuff
-	
-	/*
-	private WebGLRenderingContext glContext;
-	private WebGLProgram shaderProgram;
-	private int vertexPositionAttribute;
-	private WebGLBuffer vertexBuffer;
-	
-	*/
 
 	public interface Binder extends UiBinder<Widget, HomeView>
 	{
@@ -41,8 +32,7 @@ public class HomeView extends ViewImpl implements HomePresenter.MyView
 	public HomeView(final Binder binder)
 	{
 		widget = binder.createAndBindUi(this);
-
-		// bindWebGL();
+		bindWebGL();
 	}
 
 	@Override
@@ -51,110 +41,67 @@ public class HomeView extends ViewImpl implements HomePresenter.MyView
 		return widget;
 	}
 
-	/*
 	private void bindWebGL()
 	{
-		// Create a WebGLCanvas and get a reference to it
-		final WebGLCanvas webGLCanvas = new WebGLCanvas("500px", "500px");
-		glContext = webGLCanvas.getGlContext();
-		glContext.viewport(0, 0, 500, 500);
-		RootPanel.get("gwtGL").add(webGLCanvas);
-
-		// Start WebGL
-		startWebGL();
-	}
-
-	private void startWebGL()
-	{
-		// Initialize shaders
-		initializeShaders();
-
-		glContext.clearColor(0.0f, 0.0f, 0.0f, 1.0f);
-		glContext.clearDepth(1.0f);
-		glContext.enable(WebGLRenderingContext.DEPTH_TEST);
-		glContext.depthFunc(WebGLRenderingContext.LEQUAL);
-
-		// An array buffer holds vertex data
-		initializeBuffers();
-
-		// Draws the scene
-		drawScene();
-
-	}
-
-	private void initializeShaders()
-	{
-		WebGLShader fragmentShader = getShader(WebGLRenderingContext.FRAGMENT_SHADER, Shaders.INSTANCE.fragmentShader().getText());
-		WebGLShader vertexShader = getShader(WebGLRenderingContext.VERTEX_SHADER, Shaders.INSTANCE.vertexShader().getText());
-
-		shaderProgram = glContext.createProgram();
-		glContext.attachShader(shaderProgram, vertexShader);
-		glContext.attachShader(shaderProgram, fragmentShader);
-		glContext.linkProgram(shaderProgram);
-
-		if (!glContext.getProgramParameterb(shaderProgram, WebGLRenderingContext.LINK_STATUS))
+		// Adds the Surface3D to the document.
+		Surface3D surface = new Surface3D(500, 500);
+		RootPanel.get().add(surface);
+		final GL2 gl = surface.getGL();
+		if (gl == null)
 		{
-			throw new RuntimeException("Could not initialise shaders");
+			Window.alert("No WebGL context found. Exiting.");
+			return;
 		}
 
-		glContext.useProgram(shaderProgram);
+		// Sets up the GL context.
+		gl.clearColor(0.0f, 0f, 0f, 1f);
+		gl.clearDepth(1);
+		gl.viewport(0, 0, surface.getWidth(), surface.getHeight());
 
-		vertexPositionAttribute = glContext.getAttribLocation(shaderProgram, "vertexPosition");
-		glContext.enableVertexAttribArray(vertexPositionAttribute);
-	}
+		gl.enable(EnableCap.DEPTH_TEST);
+		gl.depthFunc(DepthFunction.LEQUAL);
+		gl.clear(ClearBufferMask.COLOR_BUFFER_BIT, ClearBufferMask.DEPTH_BUFFER_BIT);
 
-	private WebGLShader getShader(int type, String source)
-	{
-		WebGLShader shader = glContext.createShader(type);
-
-		glContext.shaderSource(shader, source);
-		glContext.compileShader(shader);
-
-		if (!glContext.getShaderParameterb(shader, WebGLRenderingContext.COMPILE_STATUS))
+		// Creates a lambertian shader.
+		LambertianShader shader = new LambertianShader();
+		try
 		{
-			throw new RuntimeException(glContext.getShaderInfoLog(shader));
+			shader.init(gl);
+		} catch (ShaderException e)
+		{
+			Window.alert("Error loading the shader.");
+			return;
 		}
 
-		return shader;
+		// Binds the shader.
+		shader.bind();
+
+		// Creates a sphere.
+		StaticMesh mesh = new StaticMesh(gl, PrimitiveFactory.makeSphere(30, 30));
+		mesh.setPositionIndex(shader.getAttributePosition());
+		mesh.setNormalIndex(shader.getAttributeNormal());
+
+		shader.setLightPosition(0, 5, 5);
+		shader.setDiffuseColor(1, 0, 0, 1);
+
+		// Sets up the model view matrix.
+		MatrixStack.MODELVIEW.push();
+		MatrixStack.MODELVIEW.translate(0, 0, -5);
+		shader.setModelViewMatrix(MatrixStack.MODELVIEW.get());
+		MatrixStack.MODELVIEW.pop();
+
+		// Sets up a basic camera for projection.
+		MatrixStack.PROJECTION.pushIdentity();
+		MatrixStack.PROJECTION.perspective(45, 1, .1f, 100);
+		shader.setProjectionMatrix(MatrixStack.PROJECTION.get());
+		MatrixStack.PROJECTION.pop();
+
+		// Draws the mesh.
+		mesh.draw();
+
+		mesh.dispose();
+		shader.dispose();
+
 	}
 
-	private void initializeBuffers()
-	{
-		vertexBuffer = glContext.createBuffer();
-		glContext.bindBuffer(WebGLRenderingContext.ARRAY_BUFFER, vertexBuffer);
-		float[] vertices = new float[] { 0.0f, 1.0f, -5.0f, // first vertex
-				-1.0f, -1.0f, -5.0f, // second vertex
-				1.0f, -1.0f, -5.0f // third vertex
-		};
-		glContext.bufferData(WebGLRenderingContext.ARRAY_BUFFER, Float32Array.create(vertices), WebGLRenderingContext.STATIC_DRAW);
-	}
-
-	private void drawScene()
-	{
-		glContext.clear(WebGLRenderingContext.COLOR_BUFFER_BIT | WebGLRenderingContext.DEPTH_BUFFER_BIT);
-		float[] perspectiveMatrix = createPerspectiveMatrix(45, 1, 0.1f, 1000);
-		WebGLUniformLocation uniformLocation = glContext.getUniformLocation(shaderProgram, "perspectiveMatrix");
-		glContext.uniformMatrix4fv(uniformLocation, false, perspectiveMatrix);
-		glContext.vertexAttribPointer(vertexPositionAttribute, 3, WebGLRenderingContext.FLOAT, false, 0, 0);
-		glContext.drawArrays(WebGLRenderingContext.TRIANGLES, 0, 3);
-	}
-
-	private float[] createPerspectiveMatrix(int fieldOfViewVertical, float aspectRatio, float minimumClearance, float maximumClearance)
-	{
-		float top = minimumClearance * (float) Math.tan(fieldOfViewVertical * Math.PI / 360.0);
-		float bottom = -top;
-		float left = bottom * aspectRatio;
-		float right = top * aspectRatio;
-
-		float X = 2 * minimumClearance / (right - left);
-		float Y = 2 * minimumClearance / (top - bottom);
-		float A = (right + left) / (right - left);
-		float B = (top + bottom) / (top - bottom);
-		float C = -(maximumClearance + minimumClearance) / (maximumClearance - minimumClearance);
-		float D = -2 * maximumClearance * minimumClearance / (maximumClearance - minimumClearance);
-
-		return new float[] { X, 0.0f, A, 0.0f, 0.0f, Y, B, 0.0f, 0.0f, 0.0f, C, -1.0f, 0.0f, 0.0f, D, 0.0f };
-	}
-	
-	*/
 }

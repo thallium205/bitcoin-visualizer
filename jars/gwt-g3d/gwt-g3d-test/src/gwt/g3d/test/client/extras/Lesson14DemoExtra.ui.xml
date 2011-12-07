@@ -1,0 +1,60 @@
+<!-- Lesson14DemoExtra.ui.xml -->
+
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+			 xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+  <g:FlowPanel>
+  	<g:CheckBox ui:field='chkSpecular' checked='true'>Show specular highlight</g:CheckBox>
+  	<g:CheckBox ui:field='chkLighting' checked='true'>Use lighting</g:CheckBox>
+  	<g:HorizontalPanel>
+      <g:Label>Texture: </g:Label>
+      <g:ListBox ui:field='lstTextures' visibleItemCount='1' />
+  	</g:HorizontalPanel>
+  	<g:HTML><h2>Material:</h2></g:HTML>
+  	<g:HorizontalPanel>
+      <g:Label>Shininess: </g:Label>
+      <g:TextBox width='120px' ui:field='txtShininess'>32.0</g:TextBox>
+  	</g:HorizontalPanel>
+  	<g:HTML><h2>Point light:</h2></g:HTML>
+    <g:HorizontalPanel>
+      <g:HTML width='100px'><b>Location:</b></g:HTML>
+      <g:Label>X: </g:Label>
+      <g:TextBox width='120px' ui:field='txtPointX'>-10.0</g:TextBox>
+      <g:Label>Y: </g:Label>
+      <g:TextBox width='120px' ui:field='txtPointY'>4.0</g:TextBox>
+      <g:Label>Z: </g:Label>
+      <g:TextBox width='120px' ui:field='txtPointZ'>-20.0</g:TextBox>
+  	</g:HorizontalPanel>
+  	<g:HorizontalPanel>
+      <g:HTML width='100px'><b>Specular Color:</b></g:HTML>
+      <g:Label>R: </g:Label>
+      <g:TextBox width='120px' ui:field='txtSpecularColorR'>0.8</g:TextBox>
+      <g:Label>G: </g:Label>
+      <g:TextBox width='120px' ui:field='txtSpecularColorG'>0.8</g:TextBox>
+      <g:Label>B: </g:Label>
+      <g:TextBox width='120px' ui:field='txtSpecularColorB'>0.8</g:TextBox>
+  	</g:HorizontalPanel>
+  	<g:HorizontalPanel>
+      <g:HTML width='100px'><b>Diffuse Color:</b></g:HTML>
+      <g:Label>R: </g:Label>
+      <g:TextBox width='120px' ui:field='txtDiffuseColorR'>0.8</g:TextBox>
+      <g:Label>G: </g:Label>
+      <g:TextBox width='120px' ui:field='txtDiffuseColorG'>0.8</g:TextBox>
+      <g:Label>B: </g:Label>
+      <g:TextBox width='120px' ui:field='txtDiffuseColorB'>0.8</g:TextBox>
+  	</g:HorizontalPanel>
+  	<g:HTML><h2>Ambient light:</h2></g:HTML>
+    <g:HorizontalPanel>
+      <g:HTML width='100px'><b>Ambient:</b></g:HTML>
+      <g:Label>R: </g:Label>
+      <g:TextBox width='120px' ui:field='txtAmbientR'>0.2</g:TextBox>
+      <g:Label>G: </g:Label>
+      <g:TextBox width='120px' ui:field='txtAmbientG'>0.2</g:TextBox>
+      <g:Label>B: </g:Label>
+      <g:TextBox width='120px' ui:field='txtAmbientB'>0.2</g:TextBox>
+  	</g:HorizontalPanel>
+  	<g:HTML> 
+Galvanized texture courtesy of <a href="http://www.arroway-textures.com/">Arroway Textures</a>.<br/> 
+Earth texture courtesy of <a href="http://www.esa.int/esaEO/SEMGSY2IU7E_index_0.html">the European Space Agency/Envisat</a>.<br/> 
+	</g:HTML> 
+  </g:FlowPanel>
+</ui:UiBinder>

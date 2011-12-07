@@ -1,0 +1,42 @@
+<!-- Lesson8DemoExtra.ui.xml -->
+
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+			 xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+  <g:FlowPanel>
+  	<g:CheckBox ui:field='chkBlending' checked='true'>Use blending</g:CheckBox>
+  	<g:Label>Alpha level</g:Label>
+  	<g:TextBox width='100px' ui:field='txtAlpha'>0.5</g:TextBox>
+  	<g:HTML><br /></g:HTML>
+  	<g:CheckBox ui:field='chkLighting' checked='true'>Use lighting</g:CheckBox>
+  	<g:HTML>(Use cursor keys to spin the box and <code>Page Up</code>/<code>Page Down</code> to zoom in/out)</g:HTML>
+  	<g:HTML><h2>Directional light:</h2></g:HTML>
+    <g:HorizontalPanel>
+      <g:HTML width='100px'><b>Direction:</b></g:HTML>
+      <g:Label>X: </g:Label>
+      <g:TextBox width='60px' ui:field='txtDirectionX'>-0.25</g:TextBox>
+      <g:Label>Y: </g:Label>
+      <g:TextBox width='60px' ui:field='txtDirectionY'>-0.25</g:TextBox>
+      <g:Label>Z: </g:Label>
+      <g:TextBox width='60px' ui:field='txtDirectionZ'>-1.0</g:TextBox>
+  	</g:HorizontalPanel>
+  	<g:HorizontalPanel>
+      <g:HTML width='100px'><b>Color:</b></g:HTML>
+      <g:Label>R: </g:Label>
+      <g:TextBox width='60px' ui:field='txtColorR'>0.8</g:TextBox>
+      <g:Label>G: </g:Label>
+      <g:TextBox width='60px' ui:field='txtColorG'>0.8</g:TextBox>
+      <g:Label>B: </g:Label>
+      <g:TextBox width='60px' ui:field='txtColorB'>0.8</g:TextBox>
+  	</g:HorizontalPanel>
+  	<g:HTML><h2>Ambient light:</h2></g:HTML>
+    <g:HorizontalPanel>
+      <g:HTML width='100px'><b>Ambient:</b></g:HTML>
+      <g:Label>R: </g:Label>
+      <g:TextBox width='60px' ui:field='txtAmbientR'>0.2</g:TextBox>
+      <g:Label>G: </g:Label>
+      <g:TextBox width='60px' ui:field='txtAmbientG'>0.2</g:TextBox>
+      <g:Label>B: </g:Label>
+      <g:TextBox width='60px' ui:field='txtAmbientB'>0.2</g:TextBox>
+  	</g:HorizontalPanel>
+  </g:FlowPanel>
+</ui:UiBinder>

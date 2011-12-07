@@ -1,0 +1,9 @@
+<!-- Lesson9DemoExtra.ui.xml -->
+
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+			 xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+  <g:FlowPanel>
+  	<g:CheckBox ui:field='chkTwinkle'>Twinkle</g:CheckBox>
+  	<g:HTML>(Use up/down cursor keys to rotate, and <code>Page Up</code>/<code>Page Down</code> to zoom in/out)</g:HTML>
+  </g:FlowPanel>
+</ui:UiBinder>

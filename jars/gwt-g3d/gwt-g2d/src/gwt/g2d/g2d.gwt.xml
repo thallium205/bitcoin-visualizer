@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 1.6.4//EN" "http://google-web-toolkit.googlecode.com/svn/tags/1.6.4/distro-source/core/src/gwt-module.dtd">
+<module rename-to='g2d'> 
+  <inherits name='com.google.gwt.core.Core'/>
+  <inherits name='com.google.gwt.user.UserAgent'/>
+  <inherits name='gwt.g2d.resources.g2d-resources'/>
+  <inherits name="com.google.gwt.dom.DOM"/>
+  
+  <replace-with class='gwt.g2d.client.graphics.canvas.CanvasInitializerIE'>
+  	<when-type-is class='gwt.g2d.client.graphics.canvas.CanvasInitializer'/>
+    <any>
+    	<when-property-is name='user.agent' value='ie6'/>
+      <when-property-is name='user.agent' value='ie8'/>
+    </any>
+  </replace-with>
+
+  <script src='excanvas.js'/>
+  
+  <source path='client'/>
+</module>

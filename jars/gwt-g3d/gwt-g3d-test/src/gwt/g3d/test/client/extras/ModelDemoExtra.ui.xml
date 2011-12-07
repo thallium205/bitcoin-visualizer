@@ -1,0 +1,18 @@
+<!-- ModelDemoExtra.ui.xml -->
+
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+			 xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+  <g:FlowPanel>
+  	<g:HTML>
+      <h2>Controls:</h2>
+      <ul> 
+	    <li><code>Page Up</code>/<code>Page Down</code> to zoom in/out</li>
+	    <li>Cursor keys: make the cube rotate (the longer you hold down a cursor key, the more it accelerates)</li>
+	  </ul>
+	</g:HTML>
+  	<g:HTML><h2>Select Model:</h2></g:HTML>
+  	<g:RadioButton ui:field='radioFish' name='model' checked='true'>Fish</g:RadioButton>
+    <g:RadioButton ui:field='radioPlant' name='model'>Plant</g:RadioButton>
+    <g:RadioButton ui:field='radioPteranadon' name='model'>Pteranadon</g:RadioButton>
+  </g:FlowPanel>
+</ui:UiBinder>

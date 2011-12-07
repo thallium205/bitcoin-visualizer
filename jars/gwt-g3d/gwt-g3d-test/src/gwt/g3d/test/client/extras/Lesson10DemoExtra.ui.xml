@@ -1,0 +1,9 @@
+<!-- Lesson10DemoExtra.ui.xml -->
+
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+			 xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+  <g:FlowPanel>
+  	<g:HTML>Use the cursor keys or WASD to run around, and <code>Page Up</code>
+/<code>Page Down</code> to look up and down.</g:HTML>
+  </g:FlowPanel>
+</ui:UiBinder>
