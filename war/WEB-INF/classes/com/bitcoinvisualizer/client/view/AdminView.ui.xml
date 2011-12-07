@@ -1,0 +1,45 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+	xmlns:g='urn:import:com.google.gwt.user.client.ui'
+	ui:generateFormat='com.google.gwt.i18n.rebind.format.PropertiesFormat'
+	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
+	ui:generateLocales='default'>
+
+	<g:HTMLPanel>
+		<g:VerticalPanel width="100%" height="100%">
+			<g:HorizontalPanel width="100%" borderWidth="0">
+				<g:Cell width="">
+					<g:Button ui:field="btnUpdateDatabase" text="Update Database"/>
+				</g:Cell>
+				<g:Cell width="100%">
+					<g:TextBox width="100%" alignment="LEFT" ui:field="txtLatestHash"/>
+				</g:Cell>
+				<g:Cell horizontalAlignment="ALIGN_CENTER" width="100%">
+					<g:CheckBox text="Recursive?" ui:field="checkRecursive" checked="true"/>
+				</g:Cell>
+			</g:HorizontalPanel>
+			<g:HorizontalPanel>
+				<g:Button ui:field="btnSearchBlock">Search Block</g:Button>
+				<g:Cell width="100%">
+					<g:TextBox width="100%" ui:field="txtBlockHash"/>
+				</g:Cell>
+			</g:HorizontalPanel>
+			<g:HorizontalPanel>
+				<g:Button ui:field="btnSearchTransaction">Search Transaction</g:Button>
+				<g:Cell width="100%">
+					<g:TextBox width="100%" ui:field="txtTransactionHash"/>
+				</g:Cell>
+			</g:HorizontalPanel>
+			<g:HorizontalPanel>
+				<g:Button ui:field="btnSearchAddress">Search Address</g:Button>
+				<g:Cell width="100%">
+					<g:TextBox width="100%" ui:field="txtAddressHash"/>
+				</g:Cell>
+			</g:HorizontalPanel>
+			<g:Cell height="100%">
+				<g:RichTextArea ui:field="txtConsole" width="100%"/>
+			</g:Cell>
+		</g:VerticalPanel>
+	</g:HTMLPanel>
+</ui:UiBinder>
